@@ -1,0 +1,143 @@
+﻿drop database Tienda
+
+
+create database Tienda
+go 
+
+use Tienda
+go
+
+create table usuario(
+	idUsuario int primary key not null,
+	nombre varchar(25) not null,
+	apellido varchar (25) not null,
+	nombreUsuario varchar (25) not null,
+	psw varchar(40) not null,
+	rol char(15) not null,
+	estado char(20) not null,
+	correo varchar(25) not null
+)
+
+
+select * from usuario
+Create procedure insertarUsuario 
+	@idUsuario as int, @nombre as varchar(25), @apellido as varchar(25), @nombreUsuario as varchar(25), @psw as varchar(40), @rol as char(15),
+	@estado as char(20),  @correo as varchar(25)
+	as begin 
+if exists (select nombreUsuario from usuario where nombreUsuario = @nombreUsuario and estado = 'Activo')
+	raiserror ('Ya existe un registro con ese usuario o correo, por favor ingrese uno nuevo', 16,1)
+else
+	insert into usuario values (@idUsuario, @nombre, @apellido, @nombreUsuario, @psw, @rol, @estado, @correo)
+end 
+
+execute insertarUsuario 1, 'Daniela', 'MEJIA', 'MEJIASOC3', 'Holi', 'MANTENIMIENTO', 'ACTIVO', 'mejiadani504@gmail.com'
+execute insertarUsuario 2, 'Telma', 'MEJIA', 'MEJIALily9', 'JIJI', 'nOUSE', 'ACTIVO', 'LILI339@gmail.com'
+
+--------------------------------- UPDATE ------------------------------------
+Create procedure modificarUsuario 
+	@idUsuario as int, @nombre as varchar(25), @apellido as varchar(25), @nombreUsuario as varchar(25), @psw as varchar(40), @rol as char(15),
+	@estado as char(20),  @correo as varchar(25)
+	as begin 
+if exists (select nombreUsuario, idUsuario from usuario where (nombreUsuario = @nombreUsuario and idUsuario = @idUsuario and estado = 'Activo'))
+	raiserror ('Usuario está en uso, por favor utiliza uno nuevo', 16,1)
+else
+	update usuario set nombre = @nombre, apellido = @apellido, nombreUsuario = @nombreUsuario, psw = @psw, rol = @rol, correo = @correo
+	where idUsuario = @idUsuario
+end 
+
+
+--------------------------------- DELETE ----------------------------------
+	Create procedure eliminarUsuario 
+	@idUsuario int, @rol char(15)
+	as begin 
+		if exists (select nombreUsuario from usuario where @rol = 'Administrador')
+			raiserror ('El usuario *Administrador* no se puede eliminar, Accion denegada', 16,1)
+		else
+			update usuario set estado = 'Eliminado'
+			where idUsuario = @idUsuario and rol <> 'Administrador'
+		end 
+	execute eliminarUsuario 3, 'Cajero'
+	select * from usuario
+
+	
+--------------------------------- CONSULTA ----------------------------------
+
+
+Create procedure buscarUsuario
+@nombreUsuario varchar(50)
+as begin 
+	select CONCAT(nombre, ' ', apellido) as 'Nombre Completo', nombreUsuario as 'Usuario',
+		estado as 'Estado', rol as 'Puesto', correo as 'Correo'
+	from usuario
+	Where nombreUsuario like '%' +@nombreUsuario+ '%'
+end
+
+
+
+/*ENCRIPTACION DE CONTRASEñA*/
+USE master;
+GO
+
+select * from sys.symmetric_keys
+WHERE name = '##MS_ServiceMasterKey##'
+GO
+
+/*CREACION DE CONTRASENA PARA LA BASE DE DATOS */
+USE Tienda;
+GO
+CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'CLAVE99779209'
+GO
+
+USE Tienda;
+GO
+CREATE CERTIFICATE CertificadoParaTiendaEjercicio
+WITH SUBJECT = 'Protect Data';
+GO
+
+/*CREACION DE CONTRASENA Y CERTIFICADO */
+USE Tienda;
+GO
+CREATE SYMMETRIC KEY ClaveContrasenaUsuario
+WITH ALGORITHM = AES_128
+ENCRYPTION BY CERTIFICATE CertificadoParaTiendaEjercicio;
+GO
+
+
+/*PARA ENCRIPTAR */
+USE Tienda;
+GO
+
+OPEN SYMMETRIC KEY ClaveContrasenaUsuario
+DECRYPTION BY CERTIFICATE CertificadoParaTiendaEjercicio;
+GO
+
+UPDATE usuario
+
+SET CIFRADO_contra = ENCRYPTBYKEY (KEY_GUID('ClaveContrasenaUsuario'), contra)
+FROM usuario;
+GO
+
+CLOSE SYMMETRIC KEY ClaveContrasenaUsuario;
+GO
+
+select * from usuario
+
+/*PARA DESENCRIPTAR */
+use Tienda;
+GO
+OPEN SYMMETRIC KEY ClaveContrasenaUsuario
+DECRYPTION BY CERTIFICATE CertificadoParaTiendaEjercicio;
+GO
+
+
+SELECT CAST(DecryptByKey(CIFRADO_contra) AS vARCHAR(30)) AS DecryptedVal FROM usuario;
+GO
+
+CLOSE SYMMETRIC KEY ClaveContrasenaUsuario;
+GO
+
+
+SELECT * FROM usuario
+
+
+
