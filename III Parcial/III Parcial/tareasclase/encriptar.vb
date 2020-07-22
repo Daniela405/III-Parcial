@@ -113,17 +113,94 @@ Public Class encriptar
             MsgBox(ex.Message)
         End Try
     End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Me.Close()
-        Form1.Show()
+    Private Sub eliminarUsuario()
+        Dim idUsuario As Integer
+        Dim rol As String
+        idUsuario = txtcodigo.Text
+        rol = cmbrol.Text
+        Try
+            If (conexion.eliminarUsuario(idUsuario, rol)) Then
+                MsgBox("Dado de baja")
+                'conexion.conexion.Close()
+            Else
+                MsgBox("Error al dar de baja usuario")
+                'conexion.conexion.Close()
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
     End Sub
 
-    Private Sub btnencriptar_Click(sender As Object, e As EventArgs) Handles btnencriptar.Click
+    Private Sub btneliminar_Click(sender As Object, e As EventArgs) Handles btneliminar.Click
+        eliminarUsuario()
+    End Sub
+    Private Sub modificar()
+        Dim id As Integer
+        Dim nombre As String
+        Dim apellido As String
+        Dim usuario As String
+        Dim contraseña As String
+        Dim correo As String
+        Dim rol As Char
+        Dim Estado As Char
 
+
+        id = txtcodigo.Text
+        nombre = txtnombre.Text
+        apellido = txtapellido.Text
+        usuario = txtusername.Text
+        contraseña = txtpsw.Text
+        correo = txtcorreo.Text
+        rol = cmbrol.Text
+
+        Try
+            If (conexion.modificar(id, nombre, apellido, usuario, contraseña, correo, rol)) Then
+                MsgBox("Modificado correctamente")
+                ' conexion.conexion.Close()
+            Else
+                MsgBox("Error al modificar usuario")
+                ' conexion.conexion.Close()
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
     End Sub
 
-    Private Sub btndesencriptar_Click(sender As Object, e As EventArgs) Handles btndesencriptar.Click
+    Private Sub btnModificar_Click(sender As Object, e As EventArgs) Handles btnmodificar.Click
+        Dim id As Integer
+        Dim nombre As String
+        Dim apellido As String
+        Dim usuario As String
+        Dim contraseña As String
+        Dim correo As String
+        Dim rol As Char
 
+
+        id = txtcodigo.Text
+        nombre = txtnombre.Text
+        apellido = txtapellido.Text
+        usuario = txtusername.Text
+        contraseña = txtpsw.Text
+        correo = txtcorreo.Text
+        rol = cmbrol.Text
+
+
+        Try
+            If conexion.modificar(id, nombre, apellido, usuario, contraseña, correo, rol) Then
+                MsgBox("Modificado Correctamente")
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub txtnombre_TextChanged(sender As Object, e As EventArgs) Handles txtnombre.TextChanged
+        txtnombre.Text = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(txtnombre.Text)
+        txtnombre.SelectionStart = txtnombre.Text.Length
+    End Sub
+
+    Private Sub txtapellido_TextChanged(sender As Object, e As EventArgs) Handles txtapellido.TextChanged
+        txtapellido.Text = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(txtapellido.Text)
+        txtapellido.SelectionStart = txtapellido.Text.Length
     End Sub
 End Class

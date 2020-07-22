@@ -42,4 +42,51 @@ Public Class conexion
         End Try
     End Function
 
+    Public Function eliminarUsuario(idUsuario As Integer, rol As String)
+        Try
+            conexion.Open()
+            cmb = New SqlCommand("eliminarUsuario", conexion)
+            cmb.CommandType = CommandType.StoredProcedure
+
+
+            cmb.Parameters.AddWithValue("@idUsuario", idUsuario)
+            cmb.Parameters.AddWithValue("@rol", rol)
+            If cmb.ExecuteNonQuery <> 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return False
+        Finally
+            conexion.Close()
+        End Try
+    End Function
+
+
+    Public Function modificar(id As Integer, nombre As String, apellido As String, usuario As String, contraseña As String, correo As String, rol As Char)
+
+        Try
+            conexion.Open()
+            cmb = New SqlCommand("actualizarUsuario", conexion)
+            cmb.CommandType = CommandType.StoredProcedure
+
+
+            cmb.Parameters.AddWithValue("@id", id)
+
+
+            If cmb.ExecuteNonQuery <> 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return False
+        Finally
+            conexion.Close()
+        End Try
+    End Function
+
 End Class

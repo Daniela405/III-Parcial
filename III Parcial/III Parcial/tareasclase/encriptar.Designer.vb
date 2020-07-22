@@ -40,7 +40,8 @@ Partial Class encriptar
         Me.txtcodigo = New System.Windows.Forms.TextBox()
         Me.txtnombre = New System.Windows.Forms.TextBox()
         Me.btnguardar = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btneliminar = New System.Windows.Forms.Button()
+        Me.btnmodificar = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -208,21 +209,31 @@ Partial Class encriptar
         Me.btnguardar.Text = "Grabar"
         Me.btnguardar.UseVisualStyleBackColor = True
         '
-        'Button1
+        'btneliminar
         '
-        Me.Button1.Location = New System.Drawing.Point(205, 399)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(140, 39)
-        Me.Button1.TabIndex = 8
-        Me.Button1.Text = "Salir"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btneliminar.Location = New System.Drawing.Point(205, 399)
+        Me.btneliminar.Name = "btneliminar"
+        Me.btneliminar.Size = New System.Drawing.Size(140, 39)
+        Me.btneliminar.TabIndex = 8
+        Me.btneliminar.Text = "Eliminar"
+        Me.btneliminar.UseVisualStyleBackColor = True
+        '
+        'btnmodificar
+        '
+        Me.btnmodificar.Location = New System.Drawing.Point(351, 399)
+        Me.btnmodificar.Name = "btnmodificar"
+        Me.btnmodificar.Size = New System.Drawing.Size(140, 39)
+        Me.btnmodificar.TabIndex = 9
+        Me.btnmodificar.Text = "Modificar"
+        Me.btnmodificar.UseVisualStyleBackColor = True
         '
         'encriptar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(755, 450)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btnmodificar)
+        Me.Controls.Add(Me.btneliminar)
         Me.Controls.Add(Me.btnguardar)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.btndesencriptar)
@@ -253,5 +264,6 @@ Partial Class encriptar
     Friend WithEvents txtnombre As TextBox
     Friend WithEvents btnguardar As Button
     Friend WithEvents cmbrol As ComboBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents btneliminar As Button
+    Friend WithEvents btnmodificar As Button
 End Class
