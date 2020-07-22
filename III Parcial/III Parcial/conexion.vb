@@ -89,4 +89,55 @@ Public Class conexion
         End Try
     End Function
 
+
+
+    Public Function consultar(id As Integer)
+
+        Try
+            conexion.Open()
+            cmb = New SqlCommand("consultarUsuarios", conexion)
+            cmb.CommandType = CommandType.StoredProcedure
+
+
+            cmb.Parameters.AddWithValue("@id", id)
+
+            If cmb.ExecuteNonQuery <> 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return False
+        Finally
+            conexion.Close()
+        End Try
+    End Function
+
+
+    Public Function BuscarUsuario(userName As String)
+
+        Try
+            conexion.Open()
+            cmb = New SqlCommand("buscarUser", conexion)
+            cmb.CommandType = CommandType.StoredProcedure
+            cmb.Parameters.AddWithValue("@nombreUsuario", userName)
+
+            If cmb.ExecuteNonQuery Then
+                Dim dt As New DataTable
+                Dim da As New SqlDataAdapter(cmb)
+                da.Fill(dt)
+                Return dt
+                conexion.Close()
+            Else
+                Return Nothing
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return Nothing
+        Finally
+            conexion.Close()
+        End Try
+    End Function
+
 End Class

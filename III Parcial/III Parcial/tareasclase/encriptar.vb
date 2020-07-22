@@ -4,7 +4,7 @@ Imports System.IO
 Imports System.Security.Cryptography
 Imports System.Text
 Public Class encriptar
-
+    Dim DataT As DataTable
     Public Function Encriptar(ByVal clearText As String, Optional ByVal Clave As String = "MICLAVE123") As String
             Try
 
@@ -202,5 +202,30 @@ Public Class encriptar
     Private Sub txtapellido_TextChanged(sender As Object, e As EventArgs) Handles txtapellido.TextChanged
         txtapellido.Text = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(txtapellido.Text)
         txtapellido.SelectionStart = txtapellido.Text.Length
+    End Sub
+
+
+    Private Sub BuscarUsuario()
+        Dim nombreUsuario As String
+        nombreUsuario = txtusername.Text
+        Try
+            DataT = conexion.BuscarUsuario(nombreUsuario)
+            If DataT.Rows.Count <> 0 Then
+                MessageBox.Show("Usuario Encontrado correctamente", "Buscando", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                txtusername.Text = ""
+            Else
+                MessageBox.Show("Usuario no encontrado", "Buscando", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                txtusername.Text = ""
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub btnbuscar_Click(sender As Object, e As EventArgs) Handles btnbuscar.Click
+        BuscarUsuario()
+
     End Sub
 End Class

@@ -42,6 +42,7 @@ Partial Class encriptar
         Me.btnguardar = New System.Windows.Forms.Button()
         Me.btneliminar = New System.Windows.Forms.Button()
         Me.btnmodificar = New System.Windows.Forms.Button()
+        Me.btnbuscar = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -227,11 +228,21 @@ Partial Class encriptar
         Me.btnmodificar.Text = "Modificar"
         Me.btnmodificar.UseVisualStyleBackColor = True
         '
+        'btnbuscar
+        '
+        Me.btnbuscar.Location = New System.Drawing.Point(497, 399)
+        Me.btnbuscar.Name = "btnbuscar"
+        Me.btnbuscar.Size = New System.Drawing.Size(140, 39)
+        Me.btnbuscar.TabIndex = 10
+        Me.btnbuscar.Text = "Buscar"
+        Me.btnbuscar.UseVisualStyleBackColor = True
+        '
         'encriptar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(755, 450)
+        Me.Controls.Add(Me.btnbuscar)
         Me.Controls.Add(Me.btnmodificar)
         Me.Controls.Add(Me.btneliminar)
         Me.Controls.Add(Me.btnguardar)
@@ -266,4 +277,5 @@ Partial Class encriptar
     Friend WithEvents cmbrol As ComboBox
     Friend WithEvents btneliminar As Button
     Friend WithEvents btnmodificar As Button
+    Friend WithEvents btnbuscar As Button
 End Class
