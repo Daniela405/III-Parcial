@@ -74,6 +74,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="conexion.vb" />
+    <Compile Include="tareasclase\frmProducto.Designer.vb">
+      <DependentUpon>frmProducto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="tareasclase\frmProducto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tareasclase\frmRestaurarContrasenia.Designer.vb">
+      <DependentUpon>frmRestaurarContrasenia.vb</DependentUpon>
+    </Compile>
+    <Compile Include="tareasclase\frmRestaurarContrasenia.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="tareas\Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +129,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="tareasclase\frmProducto.resx">
+      <DependentUpon>frmProducto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tareasclase\frmRestaurarContrasenia.resx">
+      <DependentUpon>frmRestaurarContrasenia.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="tareas\Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
@@ -162,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="script1.txt" />
+    <Content Include="tareasclase\MensajeAennviar.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
